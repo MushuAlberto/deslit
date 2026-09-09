@@ -1,0 +1,34 @@
+
+{
+  "productName": "Litio Dashboard",
+  "appId": "com.sqm.logistica.dashboard",
+  "directories": {
+    "output": "dist-pc"
+  },
+  "files": [
+    "**/*",
+    "!dist-pc/*",
+    "!node_modules/*"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "shortcutName": "LitioDashboard"
+  }
+}

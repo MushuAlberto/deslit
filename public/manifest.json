@@ -1,0 +1,28 @@
+{
+    "name": "Litio Dashboard",
+    "short_name": "LitioDB",
+    "description": "Dashboard Operativo e Inteligencia Logística",
+    "start_url": "./",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#ffffff",
+    "theme_color": "#1e293b",
+    "categories": [
+        "business",
+        "productivity"
+    ],
+    "icons": [
+        {
+            "src": "/novandino.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/novandino.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

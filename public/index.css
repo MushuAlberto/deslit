@@ -1,0 +1,5 @@
+/* CSS base para evitar error 404 */
+body {
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Litio Dashboard</title>
+
+    <!-- PWA Primary Meta Tags -->
+    <meta name="theme-color" content="#461D77">
+    <meta name="description" content="Sistema de Gestión Logística e Informe Operativo">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- iOS Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Litio DB">
+    <link rel="apple-touch-icon" href="/novandino.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://js.puter.com/v2/"></script>
+
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #FAF5E6;
+            margin: 0;
+            padding: 0;
+            color: #171717;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .no-page-break {
+            page-break-inside: avoid !important;
+        }
+
+        .page-break-before {
+            page-break-before: always !important;
+        }
+
+        .page-break-after {
+            page-break-after: always !important;
+        }
+
+        /* Control de visibilidad para PDF */
+        .pdf-only {
+            display: none !important;
+        }
+
+        .pdf-only-block {
+            display: none !important;
+        }
+
+        .is-exporting .pdf-only {
+            display: flex !important;
+        }
+
+        .is-exporting .pdf-only-block {
+            display: block !important;
+        }
+
+        .is-exporting .no-pdf,
+        .is-exporting .no-print {
+            display: none !important;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .pdf-only {
+                display: flex !important;
+            }
+            .pdf-only-block {
+                display: block !important;
+            }
+            .no-pdf {
+                display: none !important;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #DCDDEE;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7177EC;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

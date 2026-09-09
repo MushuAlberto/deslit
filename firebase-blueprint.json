@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account for PWA authentication and tracking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Unique identifier of the user" },
+        "username": { "type": "string", "description": "Login username" },
+        "password": { "type": "string", "description": "Login password" },
+        "name": { "type": "string", "description": "Full display name of the user" },
+        "role": { "type": "string", "enum": ["admin", "jefe_turno", "supervision"], "description": "Determines access levels within the application" },
+        "lastLogin": { "type": "string", "format": "date-time", "description": "ISO timestamp of last authentication" }
+      },
+      "required": ["userId", "username", "password", "name", "role"]
+    },
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Record of user actions performed in the application",
+      "type": "object",
+      "properties": {
+        "logId": { "type": "string", "description": "Unique record identifier" },
+        "userId": { "type": "string", "description": "ID of user who performed critical action" },
+        "username": { "type": "string", "description": "Username details" },
+        "name": { "type": "string", "description": "Full display name of the actor" },
+        "role": { "type": "string", "description": "Role of the actor" },
+        "action": { "type": "string", "description": "Summary statement of the action" },
+        "details": { "type": "string", "description": "Comprehensive descriptive notes on action context" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Server authenticated timestamp" }
+      },
+      "required": ["userId", "username", "name", "role", "action", "timestamp"]
+    },
+    "SystemConfig": {
+      "title": "System Configuration",
+      "description": "Global application configuration settings",
+      "type": "object",
+      "properties": {
+        "activeAi": { "type": "string", "enum": ["gemini", "glm"], "description": "The active/default AI engine for shift report analysis" },
+        "enableGemini": { "type": "boolean", "description": "Flag to enable Gemini 3.5" },
+        "enableGlm": { "type": "boolean", "description": "Flag to enable GLM-5.2" },
+        "enableShiftAnalysis": { "type": "boolean", "description": "Flag to enable AI in shift analysis module" },
+        "enableJustificationRefinement": { "type": "boolean", "description": "Flag to enable AI in justification refinement module" },
+        "lastUpdatedBy": { "type": "string", "description": "User who last updated settings" },
+        "lastUpdatedAt": { "type": "string", "format": "date-time", "description": "ISO timestamp of last update" }
+      },
+      "required": ["activeAi", "enableGemini", "enableGlm", "enableShiftAnalysis", "enableJustificationRefinement"]
+    },
+    "GalleryImage": {
+      "title": "Gallery Image",
+      "description": "Image saved in the shared gallery, including uploads and auto-reports",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique image identifier" },
+        "url": { "type": "string", "description": "DataURL base64 or URL of the image" },
+        "name": { "type": "string", "description": "Display title or date category of the image" },
+        "date": { "type": "string", "description": "Human-readable date label" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "ISO timestamp when the image was added" }
+      },
+      "required": ["url", "name", "date", "createdAt"]
+    },
+    "OperationalReportBackup": {
+      "title": "Operational Report Backup",
+      "description": "Historical backup JSON of operational reports and justifications saved in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique report date identifier (e.g. report_2026-08-04)" },
+        "date": { "type": "string", "description": "Report date in YYYY-MM-DD format" },
+        "backupData": { "type": "string", "description": "JSON string containing report data and justifications" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "ISO timestamp when the backup was updated" },
+        "updatedBy": { "type": "string", "description": "Name or username of the user who saved the backup" },
+        "summary": { "type": "string", "description": "Short description or stats summary of the backup" }
+      },
+      "required": ["id", "date", "backupData", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles database"
+    },
+    "activity_logs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Historical audit logs of user actions inside the application"
+    },
+    "system_config/{configId}": {
+      "schema": "SystemConfig",
+      "description": "Global system configurations"
+    },
+    "gallery_images/{imageId}": {
+      "schema": "GalleryImage",
+      "description": "Shared visual evidence and daily automated report screenshots"
+    },
+    "operational_reports/{reportId}": {
+      "schema": "OperationalReportBackup",
+      "description": "Historical operational reports and JSON backups shared across all devices"
+    }
+  }
+}

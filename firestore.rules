@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Catch-all safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 2. Users Collection
+    match /users/{userId} {
+      allow get: if isValidId(userId);
+      allow list: if true;
+      allow create, update: if isValidId(userId)
+        && incoming().userId is string && incoming().userId.size() <= 128
+        && incoming().username is string && incoming().username.size() <= 128
+        && incoming().name is string && incoming().name.size() <= 128
+        && incoming().role is string && incoming().role.size() <= 128;
+      allow delete: if isValidId(userId);
+    }
+
+    // 3. Activity Logs Collection
+    match /activity_logs/{logId} {
+      allow get: if isValidId(logId);
+      allow list: if true;
+      allow create: if isValidId(logId) 
+        && incoming().userId is string && incoming().userId.size() <= 128
+        && incoming().username is string && incoming().username.size() <= 128
+        && incoming().name is string && incoming().name.size() <= 128
+        && incoming().role is string && incoming().role.size() <= 128
+        && incoming().action is string && incoming().action.size() <= 256
+        && incoming().timestamp is string && incoming().timestamp.size() <= 64;
+      allow update, delete: if isValidId(logId);
+    }
+
+    // 4. System Config Collection
+    match /system_config/{configId} {
+      allow read, write: if true;
+    }
+
+    // 5. Shared Gallery Images
+    match /gallery_images/{imageId} {
+      allow get, list: if true;
+      allow create, update: if isValidId(imageId)
+        && incoming().url is string && incoming().url.size() <= 1048500
+        && incoming().name is string && incoming().name.size() <= 256
+        && incoming().date is string && incoming().date.size() <= 128
+        && incoming().createdAt is string && incoming().createdAt.size() <= 64;
+      allow delete: if isValidId(imageId);
+    }
+
+    // 6. Operational Reports & History JSON Backups
+    match /operational_reports/{reportId} {
+      allow get, list: if true;
+      allow create, update: if isValidId(reportId)
+        && incoming().id is string && incoming().id.size() <= 128
+        && incoming().date is string && incoming().date.size() <= 128
+        && incoming().backupData is string && incoming().backupData.size() <= 1048500
+        && incoming().updatedAt is string && incoming().updatedAt.size() <= 64;
+      allow delete: if isValidId(reportId);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Litio Dashboard SQM",
+  "description": "Sistema de Gestión Logística e Informe Operativo para SQM",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
